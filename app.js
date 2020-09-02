@@ -42,9 +42,11 @@ const defaultItems = [item1, item2, item3];
 // });
 
 app.get("/", (req, res) => {
-  res.render("list", {
-    listTitle: "Personal List",
-    newListItems: items,
+  Item.find({}, (err, items) => {
+    res.render("list", {
+      listTitle: "Personal List",
+      newListItems: items,
+    });
   });
 });
 

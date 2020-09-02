@@ -33,20 +33,24 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
-// Item.insertMany(defaultItems, (err) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("Succesfully updated Item collection");
-//   }
-// });
-
 app.get("/", (req, res) => {
   Item.find({}, (err, items) => {
-    res.render("list", {
-      listTitle: "Personal List",
-      newListItems: items,
-    });
+    if (items.length === 0) {
+      Item.insertMany(defaultItems, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Succesfully updated Item collection");
+        }
+      });
+
+      res.redirect("/");
+    } else {
+      res.render("list", {
+        listTitle: "Personal List",
+        newListItems: items,
+      });
+    }
   });
 });
 
@@ -66,7 +70,13 @@ app.post("/", (req, res) => {
     workItems.push(req.body.newItem);
     res.redirect("/work");
   } else {
-    items.push(req.body.newItem);
+    const itemName = req.body.newItem;
+
+    const item = new Item({
+      name: itemName,
+    });
+
+    item.save();
     res.redirect("/");
   }
 });

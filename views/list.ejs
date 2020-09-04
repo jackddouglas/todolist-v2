@@ -27,4 +27,18 @@
   </form>
 </div>
 
+<div class="box">
+  <div class="item">
+    <h2>Lists</h2>
+  </div>
+  <div class="item">
+    <a href="/"><p>Today</p></a>
+  </div>
+  <% lists.forEach(e => { %>
+    <div class="item">
+      <a href="/<%= e %>"><p><%= e %></p></a>
+    </div>
+  <% }); %>
+</div>
+
 <%- include("footer") -%>

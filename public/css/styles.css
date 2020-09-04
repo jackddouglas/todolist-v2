@@ -1,14 +1,19 @@
 html {
-  background-color: #E4E9FD;
-  background-image: -webkit-linear-gradient(65deg, #e46c76 50%, #E4E9FD 50%);
+  background-color: #e4e9fd;
+  background-image: -webkit-linear-gradient(65deg, #e46c76 50%, #e4e9fd 50%);
   min-height: 1000px;
   height: 100%;
-  font-family: 'helvetica neue';
+  font-family: "helvetica neue";
 }
 
 h1 {
   color: #fff;
   padding: 10px;
+}
+
+h2 {
+  color: #e46c76;
+  margin: 0 auto 0;
 }
 
 .box {
@@ -28,14 +33,14 @@ h1 {
   min-height: 70px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #F1F1F1;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .item:last-child {
   border-bottom: 0;
 }
 
-input:checked+p {
+input:checked + p {
   text-decoration: line-through;
   text-decoration-color: #e46c76;
 }
@@ -50,6 +55,10 @@ p {
   font-size: 20px;
   font-weight: 200;
   color: #00204a;
+}
+
+a {
+  text-decoration: none;
 }
 
 form.item {

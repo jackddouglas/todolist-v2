@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const { get } = require("lodash");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -46,23 +47,32 @@ const listSchema = {
 const List = mongoose.model("List", listSchema);
 
 app.get("/", (req, res) => {
-  Item.find({}, (err, items) => {
-    if (items.length === 0) {
-      Item.insertMany(defaultItems, (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Succesfully updated Item collection");
-        }
-      });
+  List.find({}, (err, results) => {
+    Item.find({}, (err, items) => {
+      if (items.length === 0) {
+        Item.insertMany(defaultItems, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Succesfully updated Item collection");
+          }
+        });
 
-      res.redirect("/");
-    } else {
-      res.render("list", {
-        listTitle: "Today",
-        newListItems: items,
-      });
-    }
+        res.redirect("/");
+      } else {
+        const temp = [];
+        results.forEach((e) => {
+          temp.push(e.name);
+        });
+        const lists = [...new Set(temp)];
+
+        res.render("list", {
+          listTitle: "Today",
+          newListItems: items,
+          lists: lists,
+        });
+      }
+    });
   });
 });
 
@@ -73,24 +83,33 @@ app.get("/about", (req, res) => {
 app.get("/:list", (req, res) => {
   const customListName = _.capitalize(req.params.list);
 
-  List.findOne({ name: customListName }, (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      if (result) {
-        res.render("list", {
-          listTitle: result.name,
-          newListItems: result.items,
-        });
+  List.find({}, (err, results) => {
+    List.findOne({ name: customListName }, (err, result) => {
+      if (err) {
+        console.log(err);
       } else {
-        const list = new List({
-          name: customListName,
-          items: defaultItems,
+        const temp = [];
+        results.forEach((e) => {
+          temp.push(e.name);
         });
-        list.save();
-        res.redirect("/" + customListName);
+        const lists = [...new Set(temp)];
+
+        if (result) {
+          res.render("list", {
+            listTitle: result.name,
+            newListItems: result.items,
+            lists: lists,
+          });
+        } else {
+          const list = new List({
+            name: customListName,
+            items: defaultItems,
+          });
+          list.save();
+          res.redirect("/" + customListName);
+        }
       }
-    }
+    });
   });
 });
 

@@ -95,6 +95,10 @@ app.get("/:list", (req, res) => {
         const temp = [];
         results.forEach((e) => {
           temp.push(e.name);
+
+          if (e.name === "Favicon.ico") {
+            List.deleteOne({ name: e.name }, (err) => {});
+          }
         });
         const lists = [...new Set(temp)];
 
@@ -166,7 +170,11 @@ app.post("/delete", (req, res) => {
 
 app.post("/create", (req, res) => {
   const listName = req.body.newList;
-  res.redirect("/" + listName);
+  if (listName === "Favicon.ico" || listName === "favicon.ico") {
+    res.redirect("/");
+  } else {
+    res.redirect("/" + listName);
+  }
 });
 
 let port = process.env.PORT;

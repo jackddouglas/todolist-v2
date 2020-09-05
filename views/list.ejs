@@ -42,7 +42,7 @@
   </div>
   <% lists.forEach(e => { %>
     <div class="item">
-      <% if (e !== "Favicon.ico") { %>
+      <% if (e !== "Favicon.ico" && e !== "") { %>
         <a href="/<%= e %>"><p><%= e %></p></a>
       <% } %>
     </div>

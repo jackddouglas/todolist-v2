@@ -63,6 +63,10 @@ app.get("/", (req, res) => {
         const temp = [];
         results.forEach((e) => {
           temp.push(e.name);
+
+          if (e.name === "Favicon.ico") {
+            List.deleteOne({ name: e.name }, (err) => {});
+          }
         });
         const lists = [...new Set(temp)];
 

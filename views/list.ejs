@@ -43,7 +43,10 @@
   <% lists.forEach(e => { %>
     <div class="item">
       <% if (e !== "Favicon.ico" && e !== "") { %>
-        <a href="/<%= e %>"><p><%= e %></p></a>
+        <form action="/deleteList" method="POST">
+          <button type="submit" name="deleteButton" value="<%= e %>" id="deleteButton">X</button>
+          <a href="/<%= e %>" style="float: right;"><p><%= e %></p></a>
+        </form>
       <% } %>
     </div>
   <% }); %>

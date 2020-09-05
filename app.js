@@ -168,6 +168,12 @@ app.post("/delete", (req, res) => {
   }
 });
 
+app.post("/deleteList", (req, res) => {
+  const listName = req.body.deleteButton;
+  List.deleteOne({ name: listName }, (err) => {});
+  res.redirect("/");
+});
+
 app.post("/create", (req, res) => {
   const listName = req.body.newList;
   if (listName === "Favicon.ico" || listName === "favicon.ico") {

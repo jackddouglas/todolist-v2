@@ -49,6 +49,14 @@ input[type="checkbox"] {
   margin: 20px;
 }
 
+#deleteButton {
+  background-color: transparent;
+  color: #42454b;
+  font-size: 15px;
+  width: auto;
+  padding: 13px 0 0 10px;
+}
+
 p {
   margin: 0;
   padding: 20px;

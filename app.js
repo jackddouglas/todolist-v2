@@ -160,6 +160,11 @@ app.post("/delete", (req, res) => {
   }
 });
 
+app.post("/create", (req, res) => {
+  const listName = req.body.newList;
+  res.redirect("/" + listName);
+});
+
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
